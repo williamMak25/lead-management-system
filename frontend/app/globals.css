@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  /* Ledger palette */
+  --color-ink: #1B2430;
+  --color-ink-soft: #2B3648;
+  --color-paper: #ECEEE7;
+  --color-paper-deep: #E1E4D9;
+  --color-card: #FBFAF6;
+  --color-ledger: #2F6F5E;
+  --color-ledger-soft: #E4EEE9;
+  --color-brick: #B54F35;
+  --color-brick-soft: #F5E4DE;
+  --color-gold: #C9A227;
+  --color-gold-soft: #F6EFD6;
+  --color-ink-muted: #6B7280;
+}
+
+/* Font families come from next/font (see app/layout.jsx) */
+@theme inline {
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Index-card look for kanban cards */
+.index-card {
+  background: var(--color-card);
+  border: 1px solid #DCDFD3;
+  border-top: 3px solid var(--color-ledger);
+  box-shadow: 0 1px 2px rgba(27, 36, 48, 0.06);
+}
+
+.index-card.priority {
+  border-top-color: var(--color-gold);
+}
+
+/* in the components layer so utility classes (w-16, py-1…) can still override it */
+@layer components {
+  .input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--color-card);
+    font-size: 0.875rem;
+  }
+  .input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(47,111,94,0.35);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #C7CBBC;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out;
+}
