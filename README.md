@@ -6,8 +6,6 @@ drag-and-drop deal pipeline, tasks, notes, and a dashboard with charts.
 - **Backend:** Python + [Litestar](https://litestar.dev/), SQLAlchemy 2 (async, via [Advanced Alchemy](https://docs.advanced-alchemy.litestar.dev/)) on PostgreSQL
 - **Frontend:** [Next.js](https://nextjs.org/) 16 (App Router) + React 19 + Tailwind CSS v4 + Recharts
 
-The original Express + Vite version lives in `legacy/` for reference.
-
 Comes pre-loaded with realistic sample data (companies, contacts, deals across
 every pipeline stage, tasks, and notes) so it's usable immediately.
 
