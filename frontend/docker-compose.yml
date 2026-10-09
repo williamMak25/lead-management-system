@@ -1,0 +1,23 @@
+# Frontend stack: Next.js. Needs the backend stack running first (it creates `crm-net`).
+# Published on 127.0.0.1 only — put Nginx (with HTTPS) in front of it.
+#
+#   cp .env.prod.example .env.prod   # optional, to change the port
+#   docker compose --env-file .env.prod up -d --build
+
+name: crm-frontend
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        BACKEND_URL: http://crm-backend:4100
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:${FRONTEND_PORT:-3100}:3000'
+    networks:
+      - crm-net
+
+networks:
+  crm-net:
+    external: true

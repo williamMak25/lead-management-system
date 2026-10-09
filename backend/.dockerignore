@@ -1,0 +1,9 @@
+.venv
+.env
+.ruff_cache
+.mypy_cache
+__pycache__
+**/__pycache__
+Dockerfile
+.dockerignore
+.env.prod

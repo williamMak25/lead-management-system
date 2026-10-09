@@ -3,6 +3,8 @@ const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:4000';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   turbopack: { root: import.meta.dirname },
+  // Self-contained server build for the Docker image (frontend/Dockerfile)
+  output: 'standalone',
   // The browser only ever talks to Next; /api/* is proxied to the Litestar backend,
   // so the session cookie stays first-party in dev and production alike.
   // v1 URLs: deals became opportunities (same ids), tasks became activities

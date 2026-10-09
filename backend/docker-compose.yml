@@ -1,0 +1,49 @@
+# Backend stack: Postgres + Litestar API. Start this before the frontend stack —
+# it creates the shared `crm-net` network the frontend joins to reach the API.
+#
+#   cp .env.prod.example .env.prod   # then fill it in
+#   docker compose --env-file .env.prod up -d --build
+
+name: crm-backend
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: crm
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env.prod}
+      POSTGRES_DB: crm
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U crm -d crm']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - default
+
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env.prod
+    environment:
+      DATABASE_URL: postgresql://crm:${POSTGRES_PASSWORD}@db:5432/crm
+      PORT: 4100
+      APP_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      default:
+      crm-net:
+        aliases:
+          - crm-backend
+
+volumes:
+  pgdata:
+
+networks:
+  crm-net:
+    name: crm-net
